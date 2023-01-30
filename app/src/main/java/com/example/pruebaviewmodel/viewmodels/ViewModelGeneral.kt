@@ -1,9 +1,10 @@
-package com.example.pruebaviewmodel.guardar
+package com.example.pruebaviewmodel.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.FirebaseFirestore
 
-class ViewModelGuardar {
+class ViewModelGeneral {
     private val _dorsal = MutableLiveData<String>()
     val dorsal : LiveData<String> = _dorsal
 
@@ -16,8 +17,23 @@ class ViewModelGuardar {
     private val _posicion= MutableLiveData<String>()
     val posicion : LiveData<String> = _posicion
 
+    private val _mensajeConfirmacion = MutableLiveData<String>()
+    val mensajeConfirmacion: LiveData<String> = _mensajeConfirmacion
+
     private val _isButtonEnable = MutableLiveData<Boolean>()
-    val isButtonEnable: LiveData<Boolean> = _isButtonEnable
+    var isButtonEnable: LiveData<Boolean> = _isButtonEnable
+
+    fun peticionGuardarDatos(db: FirebaseFirestore, nombre_coleccion:String, id: String, datos: HashMap<String, String>){
+        db.collection(nombre_coleccion)
+            .document(id)
+            .set(datos)
+            .addOnSuccessListener {
+                _mensajeConfirmacion.value = "Guardado correctamente"
+            }
+            .addOnFailureListener {
+                _mensajeConfirmacion.value = "No se ha podido guardado"
+            }
+    }
 
     fun onCompletedFields(dorsal:String, nombre:String, division:String, posicion:String) {
         _dorsal.value = dorsal
@@ -30,4 +46,6 @@ class ViewModelGuardar {
     fun enableButton(dorsal:String, nombre:String, division:String, posicion:String) =
         //Patterns.EMAIL_ADDRESS.matcher(mail).matches()
         dorsal.length >0 && nombre.length >0 && division.length>0 && posicion.length>0
+
+
 }

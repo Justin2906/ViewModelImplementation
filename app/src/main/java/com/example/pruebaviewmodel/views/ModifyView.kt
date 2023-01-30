@@ -1,9 +1,12 @@
-package com.example.pruebaviewmodel.guardar
+package com.example.pruebaviewmodel.views
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -15,10 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pruebaviewmodel.R
+import com.example.pruebaviewmodel.viewmodels.ViewModelGeneral
 import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
-fun GuardarDatos(ViewModel: ViewModelGuardar) {
+fun ModificarDatos(ViewModel: ViewModelGeneral) {
 
     val back = painterResource(id = R.drawable.fondo4)
     val logo = painterResource(id = R.drawable.logo)
@@ -56,7 +60,7 @@ fun GuardarDatos(ViewModel: ViewModelGuardar) {
             OutlinedTextField(
                 value = dorsal,
                 onValueChange = { ViewModel.onCompletedFields(dorsal = it, nombre = nombre, division = division, posicion = posicion) },
-                label = { Text("Introduce el dorsal del jugador") },
+                label = { Text("Dorsal del jugador a modificar") },
                 modifier = Modifier.background(Color.White, shape = CutCornerShape(12.dp)),
                 singleLine = true,
             )
@@ -66,7 +70,7 @@ fun GuardarDatos(ViewModel: ViewModelGuardar) {
             OutlinedTextField(
                 value = nombre,
                 onValueChange = { ViewModel.onCompletedFields(dorsal = dorsal, nombre = it, division = division, posicion = posicion) },
-                label = { Text("Introduce el nombre del jugador") },
+                label = { Text("Nombre del jugador a modificar") },
                 modifier = Modifier.background(Color.White, shape = CutCornerShape(12.dp)),
                 singleLine = true,
             )
@@ -76,7 +80,7 @@ fun GuardarDatos(ViewModel: ViewModelGuardar) {
             OutlinedTextField(
                 value = division,
                 onValueChange = { ViewModel.onCompletedFields(dorsal = dorsal, nombre = nombre, division = it, posicion = posicion) },
-                label = { Text("Introduce la division del jugador") },
+                label = { Text("Division del jugador a modificar") },
                 modifier = Modifier.background(Color.White, shape = CutCornerShape(12.dp)),
                 singleLine = true,
             )
@@ -86,7 +90,7 @@ fun GuardarDatos(ViewModel: ViewModelGuardar) {
             OutlinedTextField(
                 value = posicion,
                 onValueChange = { ViewModel.onCompletedFields(dorsal = dorsal, nombre = nombre, division = division, posicion = it) },
-                label = { Text("Introduce la posicion del jugador") },
+                label = { Text("Posicion del jugador a modificar") },
                 modifier = Modifier.background(Color.White, shape = CutCornerShape(12.dp)),
                 singleLine = true,
             )
@@ -108,10 +112,10 @@ fun GuardarDatos(ViewModel: ViewModelGuardar) {
                         .document(dorsal)
                         .set(dato)
                         .addOnSuccessListener {
-                            mensaje_confirmacion ="Datos guardados correctamente"
+                            mensaje_confirmacion ="Datos modificados correctamente"
                         }
                         .addOnFailureListener {
-                            mensaje_confirmacion ="No se ha podido guardar"
+                            mensaje_confirmacion ="No se ha podido modificar los datos del jugador"
                         }
                 },
 
@@ -126,7 +130,7 @@ fun GuardarDatos(ViewModel: ViewModelGuardar) {
                 border = BorderStroke(1.dp, Color.Black)
             ){
                 Text(
-                    text = "Guardar"
+                    text = "Modificar"
                 )
 
             }
