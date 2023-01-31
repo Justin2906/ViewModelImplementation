@@ -6,5 +6,6 @@ sealed class Routes(val ruta: String) {
     object Add: Routes("Add")
     object Delete: Routes("Delete")
     object Modify: Routes("Modify")
-
+    object Search: Routes("Search")
+    object SearchAll: Routes("Search All")
 }

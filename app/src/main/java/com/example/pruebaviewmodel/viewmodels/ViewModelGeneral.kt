@@ -23,6 +23,7 @@ class ViewModelGeneral {
     private val _isButtonEnable = MutableLiveData<Boolean>()
     var isButtonEnable: LiveData<Boolean> = _isButtonEnable
 
+    //funciones guardar datos
     fun peticionGuardarDatos(db: FirebaseFirestore, nombre_coleccion:String, id: String, datos: HashMap<String, String>){
         db.collection(nombre_coleccion)
             .document(id)
@@ -35,6 +36,20 @@ class ViewModelGeneral {
             }
     }
 
+    //funcion modificar dato
+    fun peticionesModificarDatos(db: FirebaseFirestore, nombre_coleccion:String, id: String, datos: HashMap<String, String>){
+        db.collection(nombre_coleccion)
+            .document(id)
+            .set(datos)
+            .addOnSuccessListener {
+                _mensajeConfirmacion.value ="Datos modificados correctamente"
+            }
+            .addOnFailureListener {
+               _mensajeConfirmacion.value ="No se ha podido modificar los datos del jugador"
+            }
+    }
+
+    //funciones generales
     fun onCompletedFields(dorsal:String, nombre:String, division:String, posicion:String) {
         _dorsal.value = dorsal
         _nombre.value = nombre

@@ -31,6 +31,7 @@ fun EliminarDatos(ViewModel: ViewModelDelete) {
     var nombre_coleccion = "jugadores"
 
     val dorsal:String by ViewModel.dorsal.observeAsState(initial = "")
+    val mensaje:String by ViewModel.mensajeConfirmacion.observeAsState("")
     val isButtonEnable:Boolean by ViewModel.isButtonEnable.observeAsState(initial = false)
 
     Column(
@@ -56,7 +57,7 @@ fun EliminarDatos(ViewModel: ViewModelDelete) {
 
             OutlinedTextField(
                 value = dorsal,
-                onValueChange = { ViewModel.onCompletedFields(dorsal = it) },
+                onValueChange = { ViewModel.onCompletedFieldsDelete(dorsal = it) },
                 label = { Text("Introduce el dorsal del jugador") },
                 modifier = Modifier.background(Color.White, shape = CutCornerShape(12.dp)),
                 singleLine = true,
@@ -64,34 +65,22 @@ fun EliminarDatos(ViewModel: ViewModelDelete) {
 
             Spacer(modifier = Modifier.size(5.dp))
 
-            val dato = hashMapOf(
+           /* val dato = hashMapOf(
                 "dorsal" to dorsal.toString()
-            )
-
-            var mensaje_confirmacion by remember { mutableStateOf("") }
+            )*/
 
             Button(
                 onClick = {
-                    db.collection(nombre_coleccion)
-                        .document(dorsal)
-                        .delete()
-                        .addOnSuccessListener {
-                            mensaje_confirmacion ="jugador borrado correctamente"
-                        }
-                        .addOnFailureListener {
-                            mensaje_confirmacion ="No se ha podido borrar el jugador"
-                        }
+                    ViewModel.peticionEliminarDatos(db,nombre_coleccion, dorsal)
                 },
 
                 enabled= isButtonEnable,
 
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.Blue,
-                    contentColor = Color.White,
-                    disabledBackgroundColor = Color(0xFF78C8F9),
-                    disabledContentColor = Color.White
-                ),
-                border = BorderStroke(1.dp, Color.Black)
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                shape = CutCornerShape(12.dp),
+                modifier = Modifier
+                    .width(250.dp)
+                    .height(50.dp)
             ){
                 Text(
                     text = "Eliminar"
@@ -100,8 +89,12 @@ fun EliminarDatos(ViewModel: ViewModelDelete) {
             }
             Spacer(modifier = Modifier.size(5.dp))
             Text(
-                text = mensaje_confirmacion,
-                color = Color.White
+                text = mensaje,
+                color = Color.White,
+                modifier = Modifier
+                    .background( Color(0xFF6280A2), shape = CutCornerShape(6.dp))
+                    .padding(10.dp)
+                ,
             )
         }
     }

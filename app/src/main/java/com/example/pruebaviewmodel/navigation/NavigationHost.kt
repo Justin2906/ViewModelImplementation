@@ -6,11 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pruebaviewmodel.viewmodels.ViewModelDelete
 import com.example.pruebaviewmodel.viewmodels.ViewModelGeneral
-import com.example.pruebaviewmodel.menu.Options
-import com.example.pruebaviewmodel.views.EliminarDatos
-import com.example.pruebaviewmodel.views.GuardarDatos
-import com.example.pruebaviewmodel.views.ModificarDatos
-import com.example.pruebaviewmodel.views.SplashScreen
+import com.example.pruebaviewmodel.viewmodels.ViewModelQuery
+import com.example.pruebaviewmodel.views.*
 
 @Composable
 fun NavigationHost() {
@@ -23,5 +20,7 @@ fun NavigationHost() {
         composable(Routes.Add.ruta){ GuardarDatos(ViewModelGeneral()) }
         composable(Routes.Delete.ruta){ EliminarDatos(ViewModelDelete())}
         composable(Routes.Modify.ruta){ ModificarDatos(ViewModelGeneral())}
+        composable(Routes.Search.ruta){ VistaConsultar(ViewModelQuery())}
+        composable(Routes.SearchAll.ruta){ ConsultarTodo()}
     }
 }

@@ -30,11 +30,12 @@ fun ModificarDatos(ViewModel: ViewModelGeneral) {
     val db = FirebaseFirestore.getInstance()
     var nombre_coleccion = "jugadores"
 
-    val dorsal:String by ViewModel.dorsal.observeAsState(initial = "")
-    val nombre:String by ViewModel.nombre.observeAsState (initial = "")
-    val division:String by ViewModel.division.observeAsState(initial = "")
-    val posicion:String by ViewModel.posicion.observeAsState (initial = "")
-    val isButtonEnable:Boolean by ViewModel.isButtonEnable.observeAsState (initial = false)
+    val dorsal:String by ViewModel.dorsal.observeAsState("")
+    val nombre:String by ViewModel.nombre.observeAsState ("")
+    val division:String by ViewModel.division.observeAsState("")
+    val posicion:String by ViewModel.posicion.observeAsState ("")
+    val mensaje:String by ViewModel.mensajeConfirmacion.observeAsState("")
+    val isButtonEnable:Boolean by ViewModel.isButtonEnable.observeAsState (false)
 
     Column(
         modifier = Modifier
@@ -104,30 +105,18 @@ fun ModificarDatos(ViewModel: ViewModelGeneral) {
                 "posicion" to posicion.toString()
             )
 
-            var mensaje_confirmacion by remember { mutableStateOf("") }
-
             Button(
                 onClick = {
-                    db.collection(nombre_coleccion)
-                        .document(dorsal)
-                        .set(dato)
-                        .addOnSuccessListener {
-                            mensaje_confirmacion ="Datos modificados correctamente"
-                        }
-                        .addOnFailureListener {
-                            mensaje_confirmacion ="No se ha podido modificar los datos del jugador"
-                        }
+                    ViewModel.peticionesModificarDatos(db,nombre_coleccion,dorsal,dato)
                 },
 
                 enabled= isButtonEnable,
 
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.Blue,
-                    contentColor = Color.White,
-                    disabledBackgroundColor = Color(0xFF78C8F9),
-                    disabledContentColor = Color.White
-                ),
-                border = BorderStroke(1.dp, Color.Black)
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                shape = CutCornerShape(12.dp),
+                modifier = Modifier
+                    .width(250.dp)
+                    .height(50.dp)
             ){
                 Text(
                     text = "Modificar"
@@ -136,8 +125,12 @@ fun ModificarDatos(ViewModel: ViewModelGeneral) {
             }
             Spacer(modifier = Modifier.size(5.dp))
             Text(
-                text = mensaje_confirmacion,
-                color = Color.White
+                text = mensaje,
+                color = Color.White,
+                modifier = Modifier
+                    .background( Color(0xFF6280A2), shape = CutCornerShape(6.dp))
+                    .padding(10.dp)
+                ,
             )
         }
     }

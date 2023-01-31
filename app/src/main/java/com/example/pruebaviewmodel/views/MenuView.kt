@@ -1,4 +1,4 @@
-package com.example.pruebaviewmodel.menu
+package com.example.pruebaviewmodel.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -93,7 +93,7 @@ fun Options(navController: NavHostController){
             Spacer(modifier = Modifier.height(15.dp))
 
             Button(
-                onClick = {  },
+                onClick = { navController.navigate("Search") },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 shape = CutCornerShape(12.dp),
                 modifier = Modifier
@@ -110,7 +110,7 @@ fun Options(navController: NavHostController){
             Spacer(modifier = Modifier.height(15.dp))
 
             Button(
-                onClick = {  },
+                onClick = { navController.navigate("Search All") },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White), shape = CutCornerShape(12.dp),
                 modifier = Modifier
                     .width(250.dp)

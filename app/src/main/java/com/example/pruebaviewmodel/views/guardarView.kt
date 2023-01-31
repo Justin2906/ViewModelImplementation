@@ -58,7 +58,13 @@ fun GuardarDatos(ViewModel: ViewModelGeneral) {
 
             OutlinedTextField(
                 value = dorsal,
-                onValueChange = { ViewModel.onCompletedFields(dorsal = it, nombre = nombre, division = division, posicion = posicion) },
+                onValueChange = {
+                    ViewModel.onCompletedFields(
+                        dorsal = it,
+                        nombre = nombre,
+                        division = division,
+                        posicion = posicion)
+                                },
                 label = { Text("Introduce el dorsal del jugador") },
                 modifier = Modifier.background(Color.White, shape = CutCornerShape(12.dp)),
                 singleLine = true,
@@ -68,7 +74,13 @@ fun GuardarDatos(ViewModel: ViewModelGeneral) {
 
             OutlinedTextField(
                 value = nombre,
-                onValueChange = { ViewModel.onCompletedFields(dorsal = dorsal, nombre = it, division = division, posicion = posicion) },
+                onValueChange = {
+                    ViewModel.onCompletedFields(
+                        dorsal = dorsal,
+                        nombre = it,
+                        division = division,
+                        posicion = posicion)
+                                },
                 label = { Text("Introduce el nombre del jugador") },
                 modifier = Modifier.background(Color.White, shape = CutCornerShape(12.dp)),
                 singleLine = true,
@@ -78,7 +90,13 @@ fun GuardarDatos(ViewModel: ViewModelGeneral) {
 
             OutlinedTextField(
                 value = division,
-                onValueChange = { ViewModel.onCompletedFields(dorsal = dorsal, nombre = nombre, division = it, posicion = posicion) },
+                onValueChange = {
+                    ViewModel.onCompletedFields(
+                        dorsal = dorsal,
+                        nombre = nombre,
+                        division = it,
+                        posicion = posicion)
+                                },
                 label = { Text("Introduce la division del jugador") },
                 modifier = Modifier.background(Color.White, shape = CutCornerShape(12.dp)),
                 singleLine = true,
@@ -88,7 +106,13 @@ fun GuardarDatos(ViewModel: ViewModelGeneral) {
 
             OutlinedTextField(
                 value = posicion,
-                onValueChange = { ViewModel.onCompletedFields(dorsal = dorsal, nombre = nombre, division = division, posicion = it) },
+                onValueChange = {
+                    ViewModel.onCompletedFields(
+                        dorsal = dorsal,
+                        nombre = nombre,
+                        division = division,
+                        posicion = it)
+                                },
                 label = { Text("Introduce la posicion del jugador") },
                 modifier = Modifier.background(Color.White, shape = CutCornerShape(12.dp)),
                 singleLine = true,
@@ -114,13 +138,11 @@ fun GuardarDatos(ViewModel: ViewModelGeneral) {
 
                 enabled= isButtonEnable,
 
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.Blue,
-                    contentColor = Color.White,
-                    disabledBackgroundColor = Color(0xFF78C8F9),
-                    disabledContentColor = Color.White
-                ),
-                border = BorderStroke(1.dp, Color.Black)
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                shape = CutCornerShape(12.dp),
+                modifier = Modifier
+                    .width(250.dp)
+                    .height(50.dp)
             ){
                 Text(
                     text = "Guardar"
